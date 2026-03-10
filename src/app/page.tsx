@@ -5,6 +5,8 @@ import { api } from '@/lib/api';
 import { ProductGrid } from '@/components/ProductGrid';
 import { NewsletterForm } from '@/components/NewsletterForm';
 
+const BASE_URL = 'https://gadgetparcstore.com';
+
 const CATEGORIES = [
   {
     name: 'Home Office',
@@ -41,32 +43,100 @@ async function getFeaturedProducts() {
   }
 }
 
+function buildHomeJsonLd(
+  products: { name: string; slug: string; images: string[]; priceUSD: number }[],
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${BASE_URL}/#webpage`,
+        url: BASE_URL,
+        name: 'GadgetParc — Premium Tech Gear & Desk Accessories',
+        description:
+          'Shop premium desk accessories, mechanical keyboards, smart lighting & home office gadgets. Free shipping to the US & Canada.',
+        isPartOf: { '@id': `${BASE_URL}/#website` },
+        about: { '@id': `${BASE_URL}/#organization` },
+        inLanguage: 'en-US',
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Best Sellers',
+        numberOfItems: products.length,
+        itemListElement: products.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          url: `${BASE_URL}/products/${p.slug}`,
+          name: p.name,
+          image: p.images[0] || '',
+        })),
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Do you offer free shipping?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes, we offer free standard shipping on all orders to the United States and Canada.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What is your return policy?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'We offer a 30-day hassle-free return policy. If you are not satisfied with your purchase, you can return it within 30 days for a full refund.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'How long does shipping take?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Orders are processed within 1-3 business days. Delivery takes 7-15 business days for the US and 10-20 business days for Canada.',
+            },
+          },
+        ],
+      },
+    ],
+  };
+}
+
 export default async function HomePage() {
   const featured = await getFeaturedProducts();
+  const jsonLd = buildHomeJsonLd(featured);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Hero */}
       <section className="relative overflow-hidden bg-brand-midnight">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-midnight via-brand-deep to-brand-midnight" />
+        <div className="absolute inset-0 bg-linear-to-br from-brand-midnight via-brand-deep to-brand-midnight" />
         <div className="container-page relative z-10 flex flex-col items-center py-20 text-center lg:py-32">
           <span className="mb-4 inline-block rounded-full border border-brand-cyan/30 bg-brand-cyan/10 px-4 py-1 text-xs font-semibold text-brand-cyan">
-            Free Shipping on All US Orders
+            Free Shipping on All US &amp; Canada Orders
           </span>
           <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
             Upgrade Your{' '}
-            <span className="bg-gradient-to-r from-brand-cyan to-emerald-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-brand-cyan to-emerald-400 bg-clip-text text-transparent">
               Workspace
             </span>
           </h1>
           <p className="mt-5 max-w-xl text-lg text-gray-300">
-            Premium tech gear for the modern professional. Smart lighting, mechanical keyboards, and desk accessories curated for productivity.
+            Premium desk accessories, mechanical keyboards, and smart lighting curated for productivity. Shipped free to the US &amp; Canada.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link href="/categories/home-office" className="btn-primary">
               Shop Now <ArrowRight size={18} />
             </Link>
-            <Link href="/categories/mechanical-keyboards" className="btn-secondary !border-white/30 !text-white hover:!bg-white/10">
+            <Link href="/categories/mechanical-keyboards" className="btn-secondary border-white/30! text-white! hover:bg-white/10!">
               View Keyboards
             </Link>
           </div>
@@ -74,7 +144,7 @@ export default async function HomePage() {
       </section>
 
       {/* Trust badges */}
-      <section className="border-b border-gray-100 bg-gray-50">
+      <section className="border-b border-gray-100 bg-gray-50" aria-label="Trust badges">
         <div className="container-page grid grid-cols-2 gap-6 py-6 lg:grid-cols-4">
           {TRUST_BADGES.map((badge) => (
             <div key={badge.title} className="flex items-center gap-3">
@@ -91,9 +161,11 @@ export default async function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="container-page py-16">
+      <section className="container-page py-16" aria-labelledby="categories-heading">
         <div className="mb-10 text-center">
-          <h2 className="text-3xl font-bold text-brand-midnight">Shop by Category</h2>
+          <h2 id="categories-heading" className="text-3xl font-bold text-brand-midnight">
+            Shop by Category
+          </h2>
           <p className="mt-2 text-gray-500">Find the perfect gear for your setup</p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
@@ -103,15 +175,15 @@ export default async function HomePage() {
               href={`/categories/${cat.slug}`}
               className="group relative overflow-hidden rounded-2xl"
             >
-              <div className="relative aspect-[4/3]">
+              <div className="relative aspect-4/3">
                 <Image
                   src={cat.image}
-                  alt={cat.name}
+                  alt={`${cat.name} — ${cat.description}`}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="text-xl font-bold text-white">{cat.name}</h3>
@@ -127,11 +199,13 @@ export default async function HomePage() {
 
       {/* Featured products */}
       {featured.length > 0 && (
-        <section className="bg-gray-50 py-16">
+        <section className="bg-gray-50 py-16" aria-labelledby="bestsellers-heading">
           <div className="container-page">
             <div className="mb-10 flex items-end justify-between">
               <div>
-                <h2 className="text-3xl font-bold text-brand-midnight">Best Sellers</h2>
+                <h2 id="bestsellers-heading" className="text-3xl font-bold text-brand-midnight">
+                  Best Sellers
+                </h2>
                 <p className="mt-2 text-gray-500">Our most popular products this month</p>
               </div>
               <Link
@@ -147,9 +221,9 @@ export default async function HomePage() {
       )}
 
       {/* CTA banner */}
-      <section className="bg-brand-deep py-16">
+      <section className="bg-brand-deep py-16" aria-labelledby="cta-heading">
         <div className="container-page text-center">
-          <h2 className="text-3xl font-bold text-white">
+          <h2 id="cta-heading" className="text-3xl font-bold text-white">
             Transform Your Desk Into a Productivity Powerhouse
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-gray-300">
@@ -162,9 +236,11 @@ export default async function HomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="container-page py-16">
+      <section className="container-page py-16" aria-labelledby="newsletter-heading">
         <div className="mx-auto max-w-xl rounded-2xl bg-brand-midnight p-8 text-center">
-          <h3 className="text-2xl font-bold text-white">Get 10% Off Your First Order</h3>
+          <h3 id="newsletter-heading" className="text-2xl font-bold text-white">
+            Get 10% Off Your First Order
+          </h3>
           <p className="mt-2 text-sm text-gray-400">
             Join our newsletter for exclusive deals and workspace tips.
           </p>

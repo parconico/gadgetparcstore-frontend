@@ -8,20 +8,20 @@ export default function AppleIcon() {
     (
       <div
         style={{
-          fontSize: 100,
-          background: '#1B2A4A',
+          fontSize: 80,
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          background: 'linear-gradient(135deg, #1A1A2E 0%, #0F3460 100%)',
           borderRadius: 36,
-          color: '#2DD4BF',
+          color: '#16C79A',
           fontWeight: 800,
-          fontFamily: 'sans-serif',
+          letterSpacing: -3,
         }}
       >
-        G
+        GP
       </div>
     ),
     { ...size },

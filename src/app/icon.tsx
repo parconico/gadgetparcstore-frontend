@@ -8,20 +8,20 @@ export default function Icon() {
     (
       <div
         style={{
-          fontSize: 20,
-          background: '#1B2A4A',
+          fontSize: 18,
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          background: 'linear-gradient(135deg, #1A1A2E 0%, #0F3460 100%)',
           borderRadius: 6,
-          color: '#2DD4BF',
+          color: '#16C79A',
           fontWeight: 800,
-          fontFamily: 'sans-serif',
+          letterSpacing: -1,
         }}
       >
-        G
+        GP
       </div>
     ),
     { ...size },
