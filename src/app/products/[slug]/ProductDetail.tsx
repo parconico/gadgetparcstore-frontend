@@ -124,26 +124,26 @@ export function ProductDetail({ product }: { product: Product }) {
   }, [scrollPrev, scrollNext]);
 
   return (
-    <div className="container-page py-8">
+    <div className="container-page py-4 lg:py-8">
       {/* Breadcrumb */}
-      <nav className="mb-6 flex items-center gap-1 text-sm text-gray-500">
-        <Link href="/" className="hover:text-brand-cyan">Home</Link>
-        <ChevronRight size={14} />
+      <nav className="mb-4 flex items-center gap-1 overflow-hidden text-sm text-gray-500 lg:mb-6">
+        <Link href="/" className="shrink-0 hover:text-brand-cyan">Home</Link>
+        <ChevronRight size={14} className="shrink-0" />
         {product.category && (
           <>
-            <Link href={`/categories/${product.category.slug}`} className="hover:text-brand-cyan">
+            <Link href={`/categories/${product.category.slug}`} className="shrink-0 hover:text-brand-cyan">
               {product.category.name}
             </Link>
-            <ChevronRight size={14} />
+            <ChevronRight size={14} className="shrink-0" />
           </>
         )}
-        <span className="text-gray-900">{product.name}</span>
+        <span className="truncate text-gray-900">{product.name}</span>
       </nav>
 
-      <div className="grid gap-10 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2 lg:gap-10">
         {/* Image carousel */}
-        <div className="space-y-4">
-          <div className="group/carousel relative overflow-hidden rounded-2xl bg-gray-50">
+        <div className="space-y-3">
+          <div className="group/carousel relative overflow-hidden rounded-xl bg-gray-50 lg:rounded-2xl">
             <div ref={emblaRef} className="overflow-hidden">
               <div className="flex touch-pan-y">
                 {displayImages.map((img, i) => (
@@ -201,16 +201,16 @@ export function ProductDetail({ product }: { product: Product }) {
           </div>
 
           {displayImages.length > 1 && (
-            <div className="flex gap-3 overflow-x-auto pb-2">
+            <div className="flex gap-2 overflow-x-auto pb-2 lg:gap-3">
               {displayImages.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => scrollTo(i)}
-                  className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-colors ${
+                  className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-md border-2 transition-colors lg:h-20 lg:w-20 lg:rounded-lg ${
                     i === selectedIndex ? 'border-brand-cyan' : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <Image src={img} alt="" fill sizes="80px" className="object-cover" />
+                  <Image src={img} alt="" fill sizes="(max-width: 1024px) 56px, 80px" className="object-cover" />
                 </button>
               ))}
             </div>
@@ -224,7 +224,7 @@ export function ProductDetail({ product }: { product: Product }) {
               {product.category.name}
             </span>
           )}
-          <h1 className="text-2xl font-bold text-brand-midnight lg:text-3xl">{product.name}</h1>
+          <h1 className="text-xl font-bold text-brand-midnight sm:text-2xl lg:text-3xl">{product.name}</h1>
 
           {/* Price */}
           <div className="mt-4 flex items-baseline gap-3">
@@ -327,8 +327,8 @@ export function ProductDetail({ product }: { product: Product }) {
           </div>
 
           {/* Tabs */}
-          <div className="mt-8 border-t pt-6">
-            <div className="flex gap-6 border-b">
+          <div className="mt-6 border-t pt-4 lg:mt-8 lg:pt-6">
+            <div className="flex gap-4 overflow-x-auto border-b sm:gap-6">
               {(['description', 'specs', 'shipping'] as const).map((tab) => (
                 <button
                   key={tab}

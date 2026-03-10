@@ -48,7 +48,7 @@ export function VariantSelector({
                   key={value}
                   onClick={() => onOptionChange(option.name, value)}
                   disabled={!available}
-                  className={`rounded-lg border px-4 py-2 text-sm font-medium transition-all ${
+                  className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition-all sm:px-4 sm:py-2 sm:text-sm ${
                     isSelected
                       ? 'border-brand-cyan bg-brand-cyan/10 text-brand-cyan ring-1 ring-brand-cyan'
                       : available
