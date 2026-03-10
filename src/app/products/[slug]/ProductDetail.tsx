@@ -251,9 +251,7 @@ export function ProductDetail({ product }: { product: Product }) {
             )}
           </div>
 
-          {product.shortDescription && (
-            <p className="mt-4 text-gray-600">{product.shortDescription}</p>
-          )}
+          
 
           {/* Variant Selector */}
           {product.hasMultipleVariants && (

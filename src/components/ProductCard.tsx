@@ -51,10 +51,6 @@ export function ProductCard({ product }: { product: Product }) {
           {product.name}
         </Link>
 
-        {product.shortDescription && (
-          <p className="mb-3 line-clamp-2 text-xs text-gray-500">{product.shortDescription}</p>
-        )}
-
         <div className="mt-auto flex items-center justify-between">
           <div className="flex items-baseline gap-2">
             {hasVariants ? (
