@@ -218,16 +218,16 @@ export function ProductDetail({ product }: { product: Product }) {
           </div>
 
           {displayImages.length > 1 && (
-            <div className="flex gap-2 overflow-x-auto pb-2 lg:gap-3">
+            <div className="hidden gap-3 overflow-x-auto pb-2 sm:flex">
               {displayImages.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => scrollTo(i)}
-                  className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-md border-2 transition-colors lg:h-20 lg:w-20 lg:rounded-lg ${
+                  className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 transition-colors lg:h-20 lg:w-20 ${
                     i === selectedIndex ? 'border-brand-cyan' : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <Image src={img} alt="" fill sizes="(max-width: 1024px) 56px, 80px" className="object-cover" />
+                  <Image src={img} alt="" fill sizes="(max-width: 1024px) 64px, 80px" className="object-cover" />
                 </button>
               ))}
             </div>
@@ -241,10 +241,10 @@ export function ProductDetail({ product }: { product: Product }) {
               {product.category.name}
             </span>
           )}
-          <h1 className="text-xl font-bold text-brand-midnight sm:text-2xl lg:text-3xl">{product.name}</h1>
+          <h1 className="text-lg font-bold leading-tight text-brand-midnight sm:text-2xl lg:text-3xl">{product.name}</h1>
 
           {/* Price */}
-          <div className="mt-4 flex items-baseline gap-3">
+          <div className="mt-3 flex items-baseline gap-3 sm:mt-4">
             {product.hasMultipleVariants && !selectedVariant ? (
               <span className="text-3xl font-bold text-brand-midnight">
                 {formatPriceRange(product, currency)}

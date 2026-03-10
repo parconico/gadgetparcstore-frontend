@@ -28,41 +28,61 @@ export function VariantSelector({
 
   return (
     <div className="space-y-4">
-      {product.options.map((option: ProductOption) => (
-        <div key={option.name}>
-          <label className="mb-2 block text-sm font-semibold text-gray-700">
-            {option.name}
-            {selectedOptions[option.name] && (
-              <span className="ml-2 font-normal text-gray-500">
-                : {selectedOptions[option.name]}
-              </span>
-            )}
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {option.values.map((value) => {
-              const isSelected = selectedOptions[option.name] === value;
-              const available = isOptionAvailable(option.name, value);
+      {product.options.map((option: ProductOption) => {
+        const useDropdown = option.values.length > 8;
 
-              return (
-                <button
-                  key={value}
-                  onClick={() => onOptionChange(option.name, value)}
-                  disabled={!available}
-                  className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition-all sm:px-4 sm:py-2 sm:text-sm ${
-                    isSelected
-                      ? 'border-brand-cyan bg-brand-cyan/10 text-brand-cyan ring-1 ring-brand-cyan'
-                      : available
-                        ? 'border-gray-200 text-gray-700 hover:border-gray-400'
-                        : 'cursor-not-allowed border-gray-100 text-gray-300 line-through'
-                  }`}
-                >
-                  {value}
-                </button>
-              );
-            })}
+        return (
+          <div key={option.name}>
+            <label className="mb-2 block text-sm font-semibold text-gray-700">
+              {option.name}
+              {!useDropdown && selectedOptions[option.name] && (
+                <span className="ml-2 font-normal text-gray-500">
+                  : {selectedOptions[option.name]}
+                </span>
+              )}
+            </label>
+
+            {useDropdown ? (
+              <select
+                value={selectedOptions[option.name] || ''}
+                onChange={(e) => onOptionChange(option.name, e.target.value)}
+                className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 focus:border-brand-cyan focus:outline-none focus:ring-1 focus:ring-brand-cyan"
+              >
+                <option value="" disabled>Select {option.name}</option>
+                {option.values.map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {option.values.map((value) => {
+                  const isSelected = selectedOptions[option.name] === value;
+                  const available = isOptionAvailable(option.name, value);
+
+                  return (
+                    <button
+                      key={value}
+                      onClick={() => onOptionChange(option.name, value)}
+                      disabled={!available}
+                      className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all ${
+                        isSelected
+                          ? 'border-brand-cyan bg-brand-cyan/10 text-brand-cyan ring-1 ring-brand-cyan'
+                          : available
+                            ? 'border-gray-200 text-gray-700 hover:border-gray-400'
+                            : 'cursor-not-allowed border-gray-100 text-gray-300 line-through'
+                      }`}
+                    >
+                      {value}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        </div>
-      ))}
+        );
+      })}
 
       {selectedVariant && !selectedVariant.availableForSale && (
         <p className="text-sm font-medium text-red-500">
