@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { ShoppingCart, Menu, X, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { useCart } from '@/hooks/useCart';
-import { CurrencySelector } from './CurrencySelector';
 
 const NAV_LINKS = [
   { label: 'Home Office', href: '/categories/home-office' },
@@ -62,7 +61,6 @@ export function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
-            <CurrencySelector />
             <Link
               href="/cart"
               className="relative flex items-center gap-1 rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-brand-midnight"

@@ -27,10 +27,10 @@ const CATEGORIES = [
 ];
 
 const TRUST_BADGES = [
-  { icon: Truck, title: 'Free Shipping', subtitle: 'On all US orders' },
-  { icon: Star, title: '4.8/5 Rating', subtitle: 'From 2,000+ reviews' },
-  { icon: Shield, title: 'Secure Payment', subtitle: 'SSL encrypted' },
-  { icon: Headphones, title: '24/7 Support', subtitle: 'Always here for you' },
+  { icon: Truck, title: 'Free Shipping', subtitle: 'US & Canada' },
+  { icon: Shield, title: 'Secure Checkout', subtitle: 'SSL encrypted' },
+  { icon: Star, title: '30-Day Returns', subtitle: 'Hassle-free refunds' },
+  { icon: Headphones, title: 'Email Support', subtitle: 'We reply within 24h' },
 ];
 
 async function getFeaturedProducts() {
