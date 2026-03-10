@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'GadgetParc — Upgrade Your Workspace',
     description: 'Premium tech gear for the modern professional.',
-    url: 'https://gadgetparc.com',
+    url: 'https://gadgetparcstore.com',
     siteName: 'GadgetParc',
     type: 'website',
   },
