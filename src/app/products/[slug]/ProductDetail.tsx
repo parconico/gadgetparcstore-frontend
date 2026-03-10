@@ -35,12 +35,18 @@ import {
 
 function cleanDescription(html: string): string {
   let cleaned = html;
-  // Remove AliExpress seller branding images (warranty, feedback, store info)
-  cleaned = cleaned.replace(/<img[^>]*?(warranty|feedback|five.?star|service|aliexpress|seller|store.?info|contact.?us|shipping.?method)[^>]*?\/?>/gi, '');
-  // Remove empty paragraphs and divs left behind
-  cleaned = cleaned.replace(/<(p|div|span)[^>]*>\s*<\/(p|div|span)>/gi, '');
-  // Remove "SPECIFICATIONS" header text blocks commonly from AliExpress
+  // Remove ALL images — product photos are already in the carousel
+  cleaned = cleaned.replace(/<img[^>]*\/?>/gi, '');
+  // Remove empty links that wrapped images
+  cleaned = cleaned.replace(/<a[^>]*>\s*<\/a>/gi, '');
+  // Remove empty paragraphs, divs, spans left behind
+  cleaned = cleaned.replace(/<(p|div|span|figure|picture)[^>]*>\s*<\/(p|div|span|figure|picture)>/gi, '');
+  // Remove "SPECIFICATIONS" header text
   cleaned = cleaned.replace(/SPECIFICATIONS?\s*:?/gi, '');
+  // Remove iframes (some sellers embed videos)
+  cleaned = cleaned.replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gi, '');
+  // Clean up multiple consecutive line breaks
+  cleaned = cleaned.replace(/(<br\s*\/?\s*>){3,}/gi, '<br><br>');
   return cleaned;
 }
 
