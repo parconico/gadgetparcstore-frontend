@@ -7,6 +7,9 @@ import { Footer } from '@/components/Footer';
 const GA_ID = 'G-H2P84H47DD';
 
 export const metadata: Metadata = {
+  verification: {
+    google: 'kumw6PUKILIkozQKDwUn7XyTdGnE3_zG7WbPnG0rimE',
+  },
   title: {
     default: 'GadgetParc — Upgrade Your Workspace',
     template: '%s | GadgetParc',
