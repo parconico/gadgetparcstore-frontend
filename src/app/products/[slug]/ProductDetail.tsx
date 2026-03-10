@@ -314,10 +314,10 @@ export function ProductDetail({ product }: { product: Product }) {
           {/* Trust badges */}
           <div className="mt-6 grid grid-cols-2 gap-3">
             {[
-              { icon: Truck, text: 'Free Shipping (US)' },
+              { icon: Truck, text: 'Free Shipping' },
               { icon: RotateCcw, text: '30-Day Returns' },
               { icon: Shield, text: 'Secure Checkout' },
-              { icon: Zap, text: 'Ships in 1-3 Days' },
+              { icon: Zap, text: 'Processed in 1-3 Days' },
             ].map((badge) => (
               <div key={badge.text} className="flex items-center gap-2 rounded-lg bg-gray-50 px-3 py-2">
                 <badge.icon size={16} className="text-brand-cyan" />
@@ -363,12 +363,22 @@ export function ProductDetail({ product }: { product: Product }) {
                 </table>
               )}
               {activeTab === 'shipping' && (
-                <div className="space-y-2">
-                  <p><strong>Continental US:</strong> Free — 7-15 business days</p>
-                  <p><strong>Alaska &amp; Hawaii:</strong> $4.99 — 12-20 business days</p>
-                  <p><strong>Canada:</strong> $5.99 — 10-20 business days</p>
-                  <p><strong>UK &amp; Europe:</strong> $7.99 — 12-25 business days</p>
-                  <p className="mt-3 text-gray-500">Orders processed within 1-3 business days. Tracking provided via email.</p>
+                <div className="space-y-4">
+                  <div className="rounded-lg bg-green-50 px-4 py-3">
+                    <p className="font-semibold text-green-800">Free Shipping on All Orders</p>
+                    <p className="mt-1 text-sm text-green-700">We offer free standard shipping to the United States and Canada.</p>
+                  </div>
+                  <div className="space-y-2">
+                    <p><strong>United States:</strong> 7–15 business days</p>
+                    <p><strong>Canada:</strong> 10–20 business days</p>
+                  </div>
+                  <div className="rounded-lg bg-gray-50 px-4 py-3 text-sm text-gray-500">
+                    <p>Orders are processed within 1–3 business days. You will receive a tracking number via email once your order ships.</p>
+                    <p className="mt-2">
+                      For more details, see our{' '}
+                      <a href="/policies/shipping" className="text-brand-cyan hover:underline">Shipping Policy</a>.
+                    </p>
+                  </div>
                 </div>
               )}
             </div>

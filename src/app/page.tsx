@@ -35,7 +35,7 @@ const TRUST_BADGES = [
 
 async function getFeaturedProducts() {
   try {
-    return await api.products.featured();
+    return await api.products.featuredMixed(3);
   } catch {
     return [];
   }
@@ -138,7 +138,7 @@ export default async function HomePage() {
                 href="/categories/home-office"
                 className="hidden items-center gap-1 text-sm font-semibold text-brand-cyan hover:underline sm:flex"
               >
-                View All <ArrowRight size={14} />
+                View All Products <ArrowRight size={14} />
               </Link>
             </div>
             <ProductGrid products={featured} />

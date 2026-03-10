@@ -10,9 +10,10 @@ const SHOP_LINKS = [
 
 const SUPPORT_LINKS = [
   { label: 'Contact Us', href: '/contact' },
-  { label: 'Shipping Policy', href: '/shipping' },
-  { label: 'Return Policy', href: '/returns' },
-  { label: 'FAQ', href: '/faq' },
+  { label: 'Shipping Policy', href: '/policies/shipping' },
+  { label: 'Return Policy', href: '/policies/refund' },
+  { label: 'Terms of Service', href: '/policies/terms' },
+  { label: 'Privacy Policy', href: '/policies/privacy' },
 ];
 
 export function Footer() {
@@ -77,11 +78,9 @@ export function Footer() {
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-gray-700 pt-6 text-xs text-gray-500 sm:flex-row">
           <p>&copy; {new Date().getFullYear()} GadgetParc. All rights reserved.</p>
           <div className="flex gap-4">
+            <span>PayPal</span>
             <span>Visa</span>
             <span>Mastercard</span>
-            <span>Amex</span>
-            <span>Apple Pay</span>
-            <span>Google Pay</span>
           </div>
         </div>
       </div>

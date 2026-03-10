@@ -231,6 +231,36 @@ export async function createCart(lines: { variantId: string; quantity: number }[
   return data.cartCreate.cart;
 }
 
+// --- Shop Policies ---
+
+export interface ShopifyPolicy {
+  body: string;
+  handle: string;
+  title: string;
+}
+
+export async function getShopPolicies() {
+  const data = await shopifyFetch<{
+    shop: {
+      privacyPolicy: ShopifyPolicy | null;
+      refundPolicy: ShopifyPolicy | null;
+      termsOfService: ShopifyPolicy | null;
+      shippingPolicy: ShopifyPolicy | null;
+    };
+  }>(`
+    query GetPolicies {
+      shop {
+        privacyPolicy { body handle title }
+        refundPolicy { body handle title }
+        termsOfService { body handle title }
+        shippingPolicy { body handle title }
+      }
+    }
+  `);
+
+  return data.shop;
+}
+
 // --- Type Definitions (Shopify raw types) ---
 
 export interface ShopifyProduct {

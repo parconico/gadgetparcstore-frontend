@@ -109,6 +109,22 @@ export const api = {
       return shopifyProducts.map(mapProduct);
     },
 
+    featuredMixed: async (perCategory = 3) => {
+      const slugs = ['home-office', 'smart-lighting', 'mechanical-keyboards'];
+      const results = await Promise.all(
+        slugs.map((slug) => getCollectionByHandle(slug)),
+      );
+      const mixed: Product[] = [];
+      for (const collection of results) {
+        if (!collection) continue;
+        const products = collection.products.edges
+          .slice(0, perCategory)
+          .map((e) => mapProduct(e.node));
+        mixed.push(...products);
+      }
+      return mixed;
+    },
+
     getBySlug: async (slug: string) => {
       const sp = await getProductByHandle(slug);
       if (!sp) return null;
