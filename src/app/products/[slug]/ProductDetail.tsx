@@ -33,6 +33,17 @@ import {
   getDefaultOptions,
 } from '@/components/VariantSelector';
 
+function cleanDescription(html: string): string {
+  let cleaned = html;
+  // Remove AliExpress seller branding images (warranty, feedback, store info)
+  cleaned = cleaned.replace(/<img[^>]*?(warranty|feedback|five.?star|service|aliexpress|seller|store.?info|contact.?us|shipping.?method)[^>]*?\/?>/gi, '');
+  // Remove empty paragraphs and divs left behind
+  cleaned = cleaned.replace(/<(p|div|span)[^>]*>\s*<\/(p|div|span)>/gi, '');
+  // Remove "SPECIFICATIONS" header text blocks commonly from AliExpress
+  cleaned = cleaned.replace(/SPECIFICATIONS?\s*:?/gi, '');
+  return cleaned;
+}
+
 export function ProductDetail({ product }: { product: Product }) {
   const { addItem, currency } = useCart();
   const [qty, setQty] = useState(1);
@@ -344,8 +355,8 @@ export function ProductDetail({ product }: { product: Product }) {
             <div className="pt-4 text-sm leading-relaxed text-gray-600">
               {activeTab === 'description' && (
                 <div
-                  className="prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{ __html: product.description }}
+                  className="prose prose-sm max-w-none overflow-hidden [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-lg"
+                  dangerouslySetInnerHTML={{ __html: cleanDescription(product.description) }}
                 />
               )}
               {activeTab === 'specs' && product.specifications && (
