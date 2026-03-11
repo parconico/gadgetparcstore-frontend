@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { ArrowRight, Truck, Shield, Star, Headphones } from 'lucide-react';
 import { api } from '@/lib/api';
 import { ProductGrid } from '@/components/ProductGrid';
-import { NewsletterForm } from '@/components/NewsletterForm';
 
 const BASE_URL = 'https://gadgetparcstore.com';
 
@@ -232,21 +231,6 @@ export default async function HomePage() {
           <Link href="/categories/smart-lighting" className="btn-primary mt-8">
             Explore Collections <ArrowRight size={18} />
           </Link>
-        </div>
-      </section>
-
-      {/* Newsletter */}
-      <section className="container-page py-16" aria-labelledby="newsletter-heading">
-        <div className="mx-auto max-w-xl rounded-2xl bg-brand-midnight p-8 text-center">
-          <h3 id="newsletter-heading" className="text-2xl font-bold text-white">
-            Get 10% Off Your First Order
-          </h3>
-          <p className="mt-2 text-sm text-gray-400">
-            Join our newsletter for exclusive deals and workspace tips.
-          </p>
-          <div className="mt-5">
-            <NewsletterForm variant="light" />
-          </div>
         </div>
       </section>
     </>
