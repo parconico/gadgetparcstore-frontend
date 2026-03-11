@@ -4,7 +4,7 @@ import { ArrowRight, Truck, Shield, Star, Headphones } from 'lucide-react';
 import { api } from '@/lib/api';
 import { ProductGrid } from '@/components/ProductGrid';
 
-const BASE_URL = 'https://gadgetparcstore.com';
+const BASE_URL = 'https://gadgetparcstore.com'; // Production canonical URL
 
 const CATEGORIES = [
   {
